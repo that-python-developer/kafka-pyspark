@@ -15,7 +15,7 @@ def post_event():
     """
     mocking the behaviour of a json stream by pushing events into the kafka producer stream
     """
-    input_file = "/app_old\\data\\mock_data.json"
+    input_file = "D:\\kafka_workspaces\\kafka-pyspark\\app_old\\data\\mock_data.json"
     with open(input_file) as data_file:
         data = json.load(data_file)
         for request_json in data:
