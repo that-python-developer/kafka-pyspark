@@ -1,12 +1,15 @@
-from kafka import KafkaProducer
-from kafka.errors import NoBrokersAvailable
 import json
 import os
 import time
 import logging
 
-kafka_topic = os.environ.get('PCDEMO_CHANNEL') or 'data-stream-analysis'
-kafka_servers = '192.168.3.214:29093'
+from kafka import KafkaProducer
+from kafka.errors import NoBrokersAvailable
+
+from app.main.config import *
+
+kafka_topic = KAFKA_TOPIC
+kafka_servers = KAFKA_SERVERS
 
 
 class Broadcaster:
