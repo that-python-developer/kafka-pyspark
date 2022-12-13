@@ -1,0 +1,3 @@
+# KAFKA_SERVERS = "192.168.3.214:29093"
+KAFKA_SERVERS = "192.168.1.3:29093"
+KAFKA_TOPIC = "data-stream-analysis"
