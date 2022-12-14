@@ -1,10 +1,15 @@
 import logging
-import time
-import json
 
 from event_broadcaster import Broadcaster
 
-dispatcher = Broadcaster()
+from app.main.config import *
+from app.main.utils.produce_to_kafka import produce_to_kafka
+
+
+kafka_topic = DATA_STREAM_ANALYSIS
+kafka_servers = KAFKA_SERVERS
+
+dispatcher = Broadcaster(kafka_servers, kafka_topic)
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -17,12 +22,7 @@ def post_event():
     mocking the behaviour of a json stream by pushing events into the kafka producer stream
     """
     input_file = "D:\\kafka_workspaces\\kafka-pyspark\\app\\data\\input\\mock_data.json"
-    with open(input_file) as data_file:
-        data = json.load(data_file)
-        for request_json in data:
-            logger.debug("request had the following data: {0}".format(request_json))
-            dispatcher.push(request_json)
-            # time.sleep(1)
+    produce_to_kafka(dispatcher, logger, input_file)
 
 
 if __name__ == '__main__':

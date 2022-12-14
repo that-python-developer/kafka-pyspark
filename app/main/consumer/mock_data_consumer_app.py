@@ -1,5 +1,5 @@
 from pyspark.sql.functions import *
-from mock_data_processor import *
+from data_processor import MockDataUserDataProcessor
 
 from app.main.config import *
 from app.main.sessions.pyspark_session import get_spark_streaming_session
@@ -27,10 +27,14 @@ def get_raw_df(spark, schema, alias_value):
 def start():
     spark = get_spark_streaming_session()
 
-    df_clean = get_raw_df(spark, MOCK_DATA_USER_SCHEMA, MOCK_DATA_USER_ALIAS)
+    df_clean = get_raw_df(
+        spark,
+        MockDataUserDataProcessor().MOCK_DATA_USER_SCHEMA,
+        MockDataUserDataProcessor().MOCK_DATA_USER_ALIAS
+    )
 
-    MockDataUserDataProcessor.get_gender_by_counts(df_clean)
-    MockDataUserDataProcessor.get_country_by_counts(df_clean)
+    MockDataUserDataProcessor().get_gender_by_counts(df_clean)
+    MockDataUserDataProcessor().get_country_by_counts(df_clean)
 
     # spark.streams.awaitAnyTermination()
 

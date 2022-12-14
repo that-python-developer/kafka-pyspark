@@ -1,22 +1,23 @@
 from pyspark.sql.types import StringType, StructType, StructField
 
-MOCK_DATA_USER_SCHEMA = StructType(
-    [
-        StructField("id", StringType(), True),
-        StructField("first_name", StringType(), True),
-        StructField("last_name", StringType(), True),
-        StructField("email", StringType(), True),
-        StructField("gender", StringType(), True),
-        StructField("ip_address", StringType(), True),
-        StructField("date", StringType(), True),
-        StructField("country", StringType(), True)
-    ]
-)
-
-MOCK_DATA_USER_ALIAS = "clean_user_data"
-
 
 class MockDataUserDataProcessor:
+    def __init__(self):
+        self.MOCK_DATA_USER_SCHEMA = StructType(
+            [
+                StructField("id", StringType(), True),
+                StructField("first_name", StringType(), True),
+                StructField("last_name", StringType(), True),
+                StructField("email", StringType(), True),
+                StructField("gender", StringType(), True),
+                StructField("ip_address", StringType(), True),
+                StructField("date", StringType(), True),
+                StructField("country", StringType(), True)
+            ]
+        )
+
+        self.MOCK_DATA_USER_ALIAS = "clean_user_data"
+
     @staticmethod
     def get_country_by_counts(df_raw):
         """
@@ -48,4 +49,3 @@ class MockDataUserDataProcessor:
         pandas_df.to_csv("D:\\kafka_workspaces\\kafka-pyspark\\app\\data\\output\\gender_by_counts.csv")
         # result_df.write.options(header='True', delimiter=',') \
         #     .csv("D:\\kafka_workspaces\\kafka-pyspark\\app\\data\\output")
-        print()
