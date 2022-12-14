@@ -8,7 +8,7 @@ from kafka.errors import NoBrokersAvailable
 
 from app.main.config import *
 
-kafka_topic = KAFKA_TOPIC
+kafka_topic = DATA_STREAM_ANALYSIS
 kafka_servers = KAFKA_SERVERS
 
 
