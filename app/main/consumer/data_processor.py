@@ -19,7 +19,7 @@ class MockDataUserDataProcessor:
         self.MOCK_DATA_USER_ALIAS = "clean_user_data"
 
     @staticmethod
-    def get_country_by_counts(df_raw):
+    def get_country_by_counts_to_csv(df_raw):
         """
             :param df_raw: The raw data frame from the kafka stream
             :return: The aggregated data frame for the counts by country for each streaming micro batch
@@ -34,7 +34,7 @@ class MockDataUserDataProcessor:
         pandas_df.to_csv("D:\\kafka_workspaces\\kafka-pyspark\\app\\data\\output\\mock_data\\country_by_counts.csv")
 
     @staticmethod
-    def get_gender_by_counts(df_raw):
+    def get_gender_by_counts_to_csv(df_raw):
         """
         :param df_raw: The raw data frame from the kafka stream
         :return:  The aggregated data frame for the counts by gender for each streaming micro batch
@@ -49,6 +49,21 @@ class MockDataUserDataProcessor:
         pandas_df.to_csv("D:\\kafka_workspaces\\kafka-pyspark\\app\\data\\output\\mock_data\\gender_by_counts.csv")
         # result_df.write.options(header='True', delimiter=',') \
         #     .csv("D:\\kafka_workspaces\\kafka-pyspark\\app\\data\\output")
+
+    @staticmethod
+    def get_country_by_counts_to_kafka_topic(df_raw):
+        """
+            :param df_raw: The raw data frame from the kafka stream
+            :return: The aggregated data frame for the counts by country for each streaming micro batch
+        """
+        result_df = df_raw \
+            .groupBy("clean_user_data.country") \
+            .count() \
+            .alias("country_count") \
+            .orderBy("country_count.count", ascending=False)
+
+        pandas_df = result_df
+        return pandas_df
 
 
 class GithubDataProcessor:

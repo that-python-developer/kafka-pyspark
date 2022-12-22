@@ -4,6 +4,7 @@ from data_processor import MockDataUserDataProcessor
 from app.main.config import *
 from app.main.sessions.pyspark_session import get_spark_streaming_session
 from app.main.utils.kafka_pyspark_read import read_kafka_to_pyspark_df
+from app.main.utils.write_to_kafka_topic import write_to_kafka_topic
 
 
 def get_raw_df(spark, schema, alias_value):
@@ -33,9 +34,16 @@ def start():
         MockDataUserDataProcessor().MOCK_DATA_USER_ALIAS
     )
 
-    MockDataUserDataProcessor().get_gender_by_counts(df_clean)
-    MockDataUserDataProcessor().get_country_by_counts(df_clean)
+    MockDataUserDataProcessor().get_gender_by_counts_to_csv(df_clean)
+    MockDataUserDataProcessor().get_country_by_counts_to_csv(df_clean)
 
+    # --------------- Writing PySpark DF to a Kafka Topic ---------------------------------
+
+    kafka_servers = KAFKA_SERVERS
+    kafka_topic = DATA_STREAM_OUTPUT
+
+    pyspark_df = MockDataUserDataProcessor().get_country_by_counts_to_kafka_topic(df_clean)
+    write_to_kafka_topic(kafka_servers, kafka_topic, pyspark_df)
     # spark.streams.awaitAnyTermination()
 
 
