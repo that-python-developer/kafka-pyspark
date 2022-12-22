@@ -1,4 +1,6 @@
-KAFKA_SERVERS = "192.168.3.214:29093"
-# KAFKA_SERVERS = "192.168.1.3:29093"
+KAFKA_SERVERS = "<your-ip>:29093"
+
 DATA_STREAM_ANALYSIS = "data-stream-analysis"
+DATA_STREAM_OUTPUT = "data-stream-output"
+
 GITHUB_ANALYSIS = "github-analysis"
